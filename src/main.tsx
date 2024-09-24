@@ -1,10 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
 import "../src/normalize.css";
+import AppWrapper from "./App.tsx";
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<App />
+		<AppWrapper />
 	</StrictMode>
 );

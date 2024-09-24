@@ -1,7 +1,7 @@
-.app {
+body {
 	position: absolute;
 	background-color: rgb(51, 51, 51);
-	width: 100%;
+	min-width: 100%;
 	min-height: 100%;
 }
 
@@ -24,7 +24,7 @@
 }
 
 .header__nav {
-	margin: 20px;
+	margin: 40px 120px;
 	display: flex;
 	justify-content: space-between;
 }
@@ -32,9 +32,99 @@
 .header__list {
 	display: flex;
 	gap: 1em;
+	color: aliceblue;
+}
+
+.main {
+	display: flex;
+	justify-content: center;
 }
 
 .footer {
 	position: absolute;
 	bottom: 0;
+}
+
+.episode__name {
+	color: aliceblue;
+}
+
+.fade-enter {
+	position: absolute;
+	margin-left: 200px;
+	opacity: 0;
+	transition: all 0.4s;
+}
+.fade-enter-active {
+	position: absolute;
+	margin-left: 0;
+	opacity: 1;
+	transition: all 0.4s;
+}
+.fade-exit {
+	position: absolute;
+	margin-left: 0;
+	opacity: 1;
+	transition: all 0.4s;
+}
+.fade-exit-active {
+	position: absolute;
+	margin-left: -200px;
+	opacity: 0;
+	transition: all 0.4s;
+}
+
+.characters__wrapper {
+	max-width: 1200px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5em;
+	justify-content: center;
+}
+
+.characters__item {
+	display: flex;
+	flex-direction: column;
+	gap: 2em;
+	width: 300px;
+	background-color: rgb(63, 63, 63);
+	border-radius: 3%;
+	border: 2px solid #6e6e6e;
+	text-decoration: none;
+	overflow: hidden;
+	cursor: pointer;
+	align-items: center;
+	transition: all 0.2s;
+}
+
+.characters__item:hover {
+	backdrop-filter: initial;
+	transform: scale(1.03);
+	transition: all 0.2s;
+}
+
+.characters__item:hover > .characters__item-name {
+	font-size: 24px;
+	color: #e8f500;
+	transition: all 0.1s;
+}
+
+.characters__item-img {
+}
+
+.characters__item-name {
+	font-size: 24px;
+	margin-bottom: 0.7em;
+	color: #d1d1d1;
+	cursor: pointer;
+	font-weight: 600;
+	transition: all 0.1s;
+}
+
+.details__wrapper {
+	color: white;
+	font-size: 24px;
+	display: flex;
+	flex-direction: column;
+	gap: 2em;
 }
