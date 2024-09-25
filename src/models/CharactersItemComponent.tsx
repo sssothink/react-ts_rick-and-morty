@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { ICharacters } from "../components/MainComponents/MainHomeComponent";
+import { ICharacters } from "../components/MainComponents/MainCharactersComponent";
 import { Link } from "react-router-dom";
 
 interface CharactersItemProps {

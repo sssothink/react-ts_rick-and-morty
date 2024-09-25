@@ -28,7 +28,7 @@ interface MainHomeComponentProps {
 	handleClick: (item: ICharacters) => void;
 }
 
-const MainHomeComponent: FC<MainHomeComponentProps> = ({
+const MainCharactersComponent: FC<MainHomeComponentProps> = ({
 	characters,
 	handleClick,
 }) => {
@@ -48,4 +48,4 @@ const MainHomeComponent: FC<MainHomeComponentProps> = ({
 	);
 };
 
-export default MainHomeComponent;
+export default MainCharactersComponent;
