@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import CharactersItem from "../../models/CharactersItemComponent";
 
 export interface ICharacters {

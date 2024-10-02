@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { ICharacters } from "./MainCharactersComponent";
 
 interface CharacterDetailsProps {
