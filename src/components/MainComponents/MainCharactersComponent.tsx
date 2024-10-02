@@ -26,15 +26,17 @@ interface MainHomeComponentProps {
 	characters: ICharacters[];
 	selectedCharacter: ICharacters | null;
 	handleClick: (item: ICharacters) => void;
+	checkFound: boolean;
 }
 
 const MainCharactersComponent: FC<MainHomeComponentProps> = ({
 	characters,
 	handleClick,
+	checkFound,
 }) => {
 	return (
 		<div className="characters__wrapper">
-			{characters.length > 0 ? (
+			{!checkFound ? (
 				characters.map((character) => {
 					return (
 						<CharactersItem

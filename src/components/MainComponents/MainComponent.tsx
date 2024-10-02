@@ -14,6 +14,7 @@ const MainComponent = () => {
 	let value: string = "";
 	const navigate = useNavigate();
 	const [characters, setCharacters] = useState<ICharacters[]>([]);
+	const [checkFound, setCheckfound] = useState<boolean>(false);
 	const [filteredCharacters, setFilteredCharacters] = useState<ICharacters[]>(
 		[]
 	);
@@ -60,11 +61,9 @@ const MainComponent = () => {
 			);
 		}
 	};
-
 	useEffect(() => {
 		setFilteredCharacters([]);
 		if (searchCharacter.trim() !== "") {
-			console.log(numPage);
 			filterValue(searchCharacter);
 		}
 	}, [characters]);
@@ -91,12 +90,12 @@ const MainComponent = () => {
 		let filtered = characters.filter((character: ICharacters) =>
 			character.name.toLowerCase().includes(value.trim().toLowerCase())
 		);
+		filtered.length > 0 ? setCheckfound(false) : setCheckfound(true);
 		setFilteredCharacters(filtered);
 	};
 
-	const displayCharacters = filteredCharacters
-		? filteredCharacters
-		: characters;
+	const displayCharacters =
+		filteredCharacters.length > 0 ? filteredCharacters : characters;
 
 	return (
 		<main>
@@ -113,6 +112,7 @@ const MainComponent = () => {
 							path="/"
 							element={
 								<MainCharactersComponent
+									checkFound={checkFound}
 									characters={displayCharacters}
 									selectedCharacter={selectedCharacter}
 									handleClick={handleClick}
