@@ -1,1 +1,1 @@
-# Sky Move School
+# Rick and Morty characters project
