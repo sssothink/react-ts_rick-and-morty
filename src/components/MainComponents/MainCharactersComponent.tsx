@@ -34,16 +34,20 @@ const MainCharactersComponent: FC<MainHomeComponentProps> = ({
 }) => {
 	return (
 		<div className="characters__wrapper">
-			{characters.map((character) => {
-				return (
-					<CharactersItem
-						linkUrl={`/character/${character.id}`}
-						key={character.id}
-						character={character}
-						onClick={handleClick}
-					/>
-				);
-			})}
+			{characters.length > 0 ? (
+				characters.map((character) => {
+					return (
+						<CharactersItem
+							linkUrl={`/character/${character.id}`}
+							key={character.id}
+							character={character}
+							onClick={handleClick}
+						/>
+					);
+				})
+			) : (
+				<div className="characters__not-fount">Not found...</div>
+			)}
 		</div>
 	);
 };

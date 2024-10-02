@@ -6,12 +6,14 @@ import MainComponent from "./components/MainComponents/MainComponent";
 
 function App() {
 	return (
-		<div>
+		<div className="app__component">
 			<header>
 				<nav className="header__nav">
-					<div className="header__icone">ICON</div>
+					<div className="header__icone">
+						<LiHeaderComponent text="Rick and Morty Caracters" linkUrl="/" />
+					</div>
 					<ul className="header__list">
-						<LiHeaderComponent text="Home" linkUrl="/home" />
+						<LiHeaderComponent text="Home" linkUrl="/" />
 						<LiHeaderComponent text="Description" linkUrl="/description" />
 					</ul>
 				</nav>

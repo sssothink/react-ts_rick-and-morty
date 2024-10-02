@@ -41,6 +41,15 @@ const CharacterDetails: FC<CharacterDetailsProps> = ({ character }) => {
 					<div className="details__text-title">Last known location:</div>
 					<div className="details__text-item">{character.location.name}</div>
 				</div>
+
+				<div className="details__text">
+					<div className="details__text-title">Origin:</div>
+					<div className="details__text-item">{character.origin.name}</div>
+				</div>
+				{/* <div className="details__text">
+					<div className="details__text-title">Origin:</div>
+					<div className="details__text-item">{character.episode}</div>
+				</div> */}
 			</div>
 		</div>
 	);

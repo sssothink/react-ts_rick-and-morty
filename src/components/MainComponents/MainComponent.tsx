@@ -11,36 +11,37 @@ import MainSwitchComponent from "./MainSwitchComponent";
 
 const MainComponent = () => {
 	const location = useLocation();
+	let value: string = "";
 	const navigate = useNavigate();
 	const [characters, setCharacters] = useState<ICharacters[]>([]);
-	const [filteredCharacters, setFilteredCharacters] = useState<
-		ICharacters[] | null
-	>(null);
+	const [filteredCharacters, setFilteredCharacters] = useState<ICharacters[]>(
+		[]
+	);
 	const [selectedCharacter, setSelectedCharacter] =
 		useState<ICharacters | null>(null);
 	const [error, setError] = useState<string | null>(null);
 	const [numPage, setNumPage] = useState<number>(1);
 	const [searchCharacter, setSearchCharacter] = useState<string>("");
-
-	const baseUrl: string = "https://rickandmortyapi.com/api/character/";
+	const [baseUrl, setBaseUrl] = useState(
+		"https://rickandmortyapi.com/api/character/"
+	);
 
 	useEffect(() => {
-		navigate("/"); // при перезагрузке роутинг обнуляется
+		navigate("/"); // On reboot, the rating is reset to zero
 
 		const fetchCharacters = async () => {
 			try {
-				// вытаскиваем данные с помощью axios
-				const response = await axios.get<{ results: ICharacters[] }>(
-					baseUrl + `?page=${numPage}`
-				);
-				setCharacters(response.data.results);
+				// Pulling out the data using axios
+				const response = await axios.get<{ results: ICharacters[] }>(baseUrl);
+				const fetchedCharacters = response.data.results;
+				setCharacters(fetchedCharacters);
 			} catch (error) {
 				console.error("Error fetching characters: ", error);
 				setError("Error fetching characters");
 			}
 		};
 		fetchCharacters();
-	}, [numPage]);
+	}, [baseUrl]);
 
 	if (error) {
 		console.log("Error fetching characters: ", error);
@@ -50,67 +51,69 @@ const MainComponent = () => {
 		setSelectedCharacter(item);
 	};
 
-	// при переключении страницы
-	const handleSwitch = async (count: number) => {
-		setFilteredCharacters(null);
-		if (numPage > 1 && numPage < 42) {
+	const switchPage = (numPage: number, count: number) => {
+		if (numPage !== numPage + count) {
 			setNumPage(numPage + count);
-		} else if (numPage === 1 && count === 1) {
-			setNumPage(numPage + count);
-		} else if (numPage === 42 && count === -1) {
-			setNumPage(numPage + count);
+			setBaseUrl(
+				"https://rickandmortyapi.com/api/character/" +
+					`?page=${numPage + count}`
+			);
 		}
-		// handleSearch(searchCharacter);
 	};
 
-	// При вводе в инпут
+	useEffect(() => {
+		setFilteredCharacters([]);
+		if (searchCharacter.trim() !== "") {
+			console.log(numPage);
+			filterValue(searchCharacter);
+		}
+	}, [characters]);
+
+	// When switching pages
+	const handleSwitch = (count: number) => {
+		if (numPage > 1 && numPage < 42) {
+			switchPage(numPage, count);
+		} else if (numPage === 1 && count === 1) {
+			switchPage(numPage, count);
+		} else if (numPage === 42 && count === -1) {
+			switchPage(numPage, count);
+		}
+	};
+
+	// When entering the input:
 	const handleValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-		let value = event.target.value;
+		value = event.target.value;
 		setSearchCharacter(value);
-		// handleSearch(value);
-		let filteredCharacters = characters.filter((character: ICharacters) =>
-			character.name.toLowerCase().includes(value.toLowerCase())
-		);
-		setFilteredCharacters(filteredCharacters);
+		filterValue(value);
 	};
 
-	// const handleSearch = (value: string) => {
-	// 	let filteredCharacters = characters.filter((character: ICharacters) =>
-	// 		character.name.toLowerCase().includes(value.toLowerCase())
-	// 	);
-	// 	setFilteredCharacters(filteredCharacters);
-	// };
+	const filterValue = (value: string) => {
+		let filtered = characters.filter((character: ICharacters) =>
+			character.name.toLowerCase().includes(value.trim().toLowerCase())
+		);
+		setFilteredCharacters(filtered);
+	};
+
+	const displayCharacters = filteredCharacters
+		? filteredCharacters
+		: characters;
 
 	return (
 		<main>
 			<MainSwitchComponent
-				handleSwitch={handleSwitch}
 				numPage={numPage}
 				searchCharacter={searchCharacter}
+				handleSwitch={handleSwitch}
 				handleValue={handleValue}
 			/>
 			<TransitionGroup className="main">
 				<CSSTransition key={location.key} classNames="fade" timeout={300}>
 					<Routes location={location}>
 						<Route
-							path="/home"
-							element={
-								<MainCharactersComponent
-									characters={
-										filteredCharacters ? filteredCharacters : characters
-									}
-									selectedCharacter={selectedCharacter}
-									handleClick={handleClick}
-								/>
-							}
-						/>
-						<Route
 							path="/"
 							element={
 								<MainCharactersComponent
-									characters={
-										filteredCharacters ? filteredCharacters : characters
-									}
+									characters={displayCharacters}
 									selectedCharacter={selectedCharacter}
 									handleClick={handleClick}
 								/>
@@ -118,7 +121,7 @@ const MainComponent = () => {
 						/>
 						<Route path="/description" element={<MainDescriptionComponent />} />
 
-						{/* Переход к конкретному персонажу с подробной инфой о нем */}
+						{/* Go to a specific character with detailed information about him */}
 						<Route
 							path={`/character/${selectedCharacter?.id}`}
 							element={

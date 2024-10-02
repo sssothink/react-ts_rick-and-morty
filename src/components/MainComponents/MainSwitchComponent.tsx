@@ -15,12 +15,13 @@ const MainSwitchComponent: FC<MainSwitchComponentProps> = ({
 }) => {
 	return (
 		<>
-			<div className="switch">
+			<div className={location.pathname !== "/" ? "switch hidden" : "switch"}>
 				<input
 					type="text"
 					value={searchCharacter}
 					onChange={handleValue}
 					placeholder="Search by name character"
+					className="switch__search_input input"
 				/>
 				<div
 					onClick={() => handleSwitch(-1)}
@@ -28,9 +29,7 @@ const MainSwitchComponent: FC<MainSwitchComponentProps> = ({
 				>
 					Prev page
 				</div>
-				<div className="switch__num">
-					{numPage} {searchCharacter}
-				</div>
+				<div className="switch__num">{numPage}</div>
 				<div
 					onClick={() => handleSwitch(1)}
 					className={numPage === 42 ? "switch__btn_disable" : "switch__btn"}
